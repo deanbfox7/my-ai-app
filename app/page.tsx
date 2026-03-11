@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { experimental_useObject as useObject } from "ai/react";
-import { VideoAnalysisSchema } from "@/lib/schemas";
+import { VideoAnalysisSchema } from "@/lib/rules";
 import { Sparkles, Youtube, Zap, Mic, Hash, TrendingUp } from "lucide-react";
 
 export default function Page() {
