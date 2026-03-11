@@ -1,7 +1,7 @@
 import { google } from "@ai-sdk/google";
 import { streamObject } from "ai";
 import { z } from "zod";
-import { VideoAnalysisSchema } from "../../../lib/schemas";
+import { VideoAnalysisSchema } from "../../../lib/rules";
 
 const MODEL = "gemini-2.5-pro-preview-06-05";
 export const maxDuration = 300;
