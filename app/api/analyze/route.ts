@@ -3,7 +3,7 @@ import { streamObject } from "ai";
 import { z } from "zod";
 import { VideoAnalysisSchema } from "../../../lib/rules";
 
-const MODEL = "gemini-2.5-pro-preview-06-05";
+const MODEL = google("gemini-1.5-pro"),
 export const maxDuration = 300;
 
 const RequestSchema = z.object({
