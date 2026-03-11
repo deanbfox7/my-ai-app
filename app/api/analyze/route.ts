@@ -1,37 +1,22 @@
 import { google } from "@ai-sdk/google";
 import { streamObject } from "ai";
-import { z } from "zod";
 import { VideoAnalysisSchema } from "../../../lib/rules";
 
-const MODEL = google("gemini-1.5-pro"),
 export const maxDuration = 300;
 
-const RequestSchema = z.object({
-  youtubeUrl: z.string().url().refine(url => url.includes("youtube.com") || url.includes("youtu.be")),
-  targetAudience: z.string().optional().default("general audience"),
-  tone: z.enum(["educational", "entertaining", "inspirational", "controversial"]).optional().default("entertaining"),
-});
+export async function POST(req: Request) {
+  const { youtubeUrl } = await req.json();
 
-export async function POST(req: Request): Promise<Response> {
-  const body = await req.json();
-  const parsed = RequestSchema.safeParse(body);
-  if (!parsed.success) return new Response("Invalid request", { status: 400 });
+  const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || process.env.GOOGLE_AI_API_KEY;
+  
+  if (!apiKey) {
+    return new Response("Missing API Key", { status: 500 });
+  }
 
-  const { youtubeUrl, targetAudience, tone } = parsed.data;
-
-  const result = streamObject({
-    model: google(MODEL),
+  const result = await streamObject({
+    model: google("gemini-1.5-flash"),
     schema: VideoAnalysisSchema,
-    system: "You are an elite viral content strategist.",
-    messages: [
-      {
-        role: "user",
-        content: [
-          { type: "text", text: `Analyze this video: ${youtubeUrl} for ${targetAudience} with a ${tone} tone.` },
-          { type: "file", data: youtubeUrl, mimeType: "video/mp4" },
-        ],
-      },
-    ],
+    prompt: `Analyze this YouTube video: ${youtubeUrl}. Create 5 viral short-form video scripts.`,
   });
 
   return result.toTextStreamResponse();
