@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { experimental_useObject as useObject } from "ai/react";
+import { useObject } from "@ai-sdk/react";
 import { VideoAnalysisSchema } from "../lib/rules";
 import { Sparkles, Youtube, Zap, Mic, Hash, TrendingUp } from "lucide-react";
 
