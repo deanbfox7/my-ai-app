@@ -62,7 +62,7 @@ export default function Page() {
                   <div className="space-y-2">
                     {script?.body?.map((line, li) => (
                       <p key={li} className="text-sm text-gray-300">
-                        <span className="text-white/20 mr-2">{li + 1}</span> {line.line}
+                        <span className="text-white/20 mr-2">{li + 1}</span> {line?.line}
                       </p>
                     ))}
                   </div>
